@@ -56,17 +56,56 @@ return {
     end,
   },
   {
-    {
-      'swaits/zellij-nav.nvim',
-      lazy = true,
-      event = 'VeryLazy',
-      keys = {
-        { '<c-h>', '<cmd>ZellijNavigateLeftTab<cr>', { silent = true, desc = 'navigate left or tab' } },
-        { '<c-j>', '<cmd>ZellijNavigateDown<cr>', { silent = true, desc = 'navigate down' } },
-        { '<c-k>', '<cmd>ZellijNavigateUp<cr>', { silent = true, desc = 'navigate up' } },
-        { '<c-l>', '<cmd>ZellijNavigateRightTab<cr>', { silent = true, desc = 'navigate right or tab' } },
-      },
-      opts = {},
+    'swaits/zellij-nav.nvim',
+    lazy = true,
+    event = 'VeryLazy',
+    keys = {
+      { '<c-h>', '<cmd>ZellijNavigateLeftTab<cr>', { silent = true, desc = 'navigate left or tab' } },
+      { '<c-j>', '<cmd>ZellijNavigateDown<cr>', { silent = true, desc = 'navigate down' } },
+      { '<c-k>', '<cmd>ZellijNavigateUp<cr>', { silent = true, desc = 'navigate up' } },
+      { '<c-l>', '<cmd>ZellijNavigateRightTab<cr>', { silent = true, desc = 'navigate right or tab' } },
     },
+    opts = {},
+  },
+  {
+    'folke/snacks.nvim',
+    priority = 1000,
+    lazy = false,
+    ---@module "snacks"
+    ---@type snacks.Config
+    opts = {
+      lazygit = {
+        enabled = true,
+      },
+      bigfile = {
+        enabled = true,
+      },
+      scroll = {
+        enabled = true,
+      },
+    },
+    keys = {
+      {
+        '<leader>gg',
+        function()
+          Snacks.lazygit()
+        end,
+        desc = 'Lazygit',
+      },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'VeryLazy',
+        callback = function()
+          -- _G.dd = function(...)
+          --   Snacks.debug.inspect(...)
+          -- end
+          -- _G.bt = function()
+          --   Snacks.debug.backtrace()
+          -- end
+          -- vim.print = _G.dd
+        end,
+      })
+    end,
   },
 }
